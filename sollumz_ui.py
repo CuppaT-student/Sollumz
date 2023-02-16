@@ -48,21 +48,13 @@ class SOLLUMZ_PT_import_geometry(bpy.types.Panel):
     bl_parent_id = "FILE_PT_operator"
     bl_order = 1
 
-    @classmethod
-    def poll(cls, context):
-        sfile = context.space_data
-        operator = sfile.active_operator
-        return operator.bl_idname == "SOLLUMZ_OT_import"
-
     def draw(self, context):
+        preferences = get_addon_preferences(bpy.context)
         layout = self.layout
         layout.use_property_split = True
         layout.use_property_decorate = False
 
-        sfile = context.space_data
-        operator = sfile.active_operator
-
-        layout.prop(operator.import_settings, "join_geometries")
+        layout.prop(preferences, "join_geometries_on_import")
 
 
 class SOLLUMZ_PT_import_fragment(bpy.types.Panel):

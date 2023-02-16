@@ -526,12 +526,6 @@ class SollumzImportSettings(bpy.types.PropertyGroup):
         default=False,
     )
 
-    join_geometries: bpy.props.BoolProperty(
-        name="Join Geometries",
-        description="Joins the drawables geometries into a single mesh.",
-        default=False,
-    )
-
     split_by_bone: bpy.props.BoolProperty(
         name="Split by Bone",
         description="Splits the geometries by bone.",
@@ -699,18 +693,37 @@ class SollumzAddonPreferences(bpy.types.AddonPreferences):
     bl_idname = __package__.split(".")[0]
 
     scale_light_intensity: bpy.props.BoolProperty(
-        name="Scale Light Intensity", description="Scale light intensity by 500 on import/export", default=True)
+        name="Scale Light Intensity", 
+        description="Scale light intensity by 500 on import/export", 
+        default=True)
 
     show_vertex_painter: bpy.props.BoolProperty(
-        name="Show Vertex Painter", description="Show the Vertex Painter panel in General Tools (Includes Terrain Painter)", default=True)
+        name="Show Vertex Painter", 
+        description="Show the Vertex Painter panel in General Tools (Includes Terrain Painter)", 
+        default=True)
+
+    join_geometries_on_import: bpy.props.BoolProperty(
+        name="Join Geometries on Import by default?", 
+        description="Check join Geometries option on import by default?", 
+        default=True)
+
+    only_selected_on_export: bpy.props.BoolProperty(
+        name="Export only selected objects by default?", 
+        description="Check Limit to Selected Objects option on export by default?", 
+        default=True)
     
-    extra_color_swatches: bpy.props.BoolProperty(name="Extra Vertex Color Swatches", description="Add 3 extra color swatches to the Vertex Painter Panel (Max 6)", default=True)
+    extra_color_swatches: bpy.props.BoolProperty(
+        name="Extra Vertex Color Swatches", 
+        description="Add 3 extra color swatches to the Vertex Painter Panel (Max 6)", 
+        default=True)
+
 
     def draw(self, context):
         layout = self.layout
         layout.prop(self, "scale_light_intensity")
         layout.prop(self, "show_vertex_painter")
         layout.prop(self, "extra_color_swatches")
+        layout.prop(self, "join_geometries_on_import")
 
 def get_all_collections():
     return [bpy.context.scene.collection, *bpy.data.collections]

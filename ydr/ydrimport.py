@@ -624,7 +624,8 @@ def import_ydr(filepath, import_settings):
     ydr_xml = YDR.from_xml_file(filepath)
     drawable = drawable_to_obj(ydr_xml, filepath, os.path.basename(
         filepath.replace(YDR.file_extension, "")), None, None, import_settings)
-    if import_settings.join_geometries:
+    preferences = get_addon_preferences(bpy.context)
+    if preferences.join_geometries_on_import:
         for child in drawable.children:
             if child.sollum_type == SollumType.DRAWABLE_MODEL:
                 join_drawable_geometries(child)

@@ -3,6 +3,7 @@ import os
 from ..cwxml.drawable import YDD
 from ..cwxml.fragment import YFT
 from ..ydr.ydrimport import drawable_to_obj
+from ..tools.blenderhelper import get_addon_preferences
 from ..tools.drawablehelper import join_drawable_geometries
 from ..sollumz_properties import SollumType
 from ..sollumz_helper import find_fragment_file
@@ -70,9 +71,9 @@ def import_ydd(export_op, filepath, import_settings):
                 drawable.skeleton = yft.drawable.skeleton
         else:
             export_op.warning("No external skeleton file found.")
-
+    preferences = get_addon_preferences(bpy.context)
     drawable_dict = drawable_dict_to_obj(ydd_xml, filepath, import_settings)
-    if import_settings.join_geometries:
+    if preferences.join_geometries_on_import:
         for child in drawable_dict.children:
             if child.sollum_type == SollumType.DRAWABLE:
                 for grandchild in child.children:
